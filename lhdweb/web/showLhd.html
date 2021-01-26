@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>showLhd</title>
+    <script type="text/javascript" src="static/js/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css"/>
+    <script type="text/javascript">
+        function showLhd() {
+            $.ajax({
+                type: "post",
+                url: "lhd",
+                data: {op: "json"},
+                success: function (res) {
+                    // console.log(res);
+                    // console.log(typeof res);
+                    var str = "";
+                    for (var i = 0; i < res.length; i++) {
+                        var y = res[i];
+                        if (i % 2 == 0) {
+                            str = str + "<tr class='warning'>";
+                        } else {
+                            str = str + "<tr>";
+                        }
+                        str = str + "<td>" + y.lhda + "</td>td>";
+                        str = str + "<td>" + y.lhdb + "</td>td>";
+                        str = str + "<td>" + y.lhdc + "</td>td>";
+                        str = str + "<td>";
+                        str = str + "<a onclick='return del(" + y.lhda + ")'>del</a>>";
+                        str = str + "</td></tr>";
+                    }
+                    console.log(str);
+                    $("#lhda").html(str);
+
+                }
+            })
+
+        }
+
+        function del(lhda) {
+           // alert(lhda);
+            if (confirm("确定要删除编号为["+lhda+"]的数据吗？")){
+                $.ajax({
+                    type: 'post',
+                    url: "lhd",
+                    data: {op: 'ajaxdel', lhda: lhda},
+                    success: function (res) {
+                        if (res.indexOf("success"!=-1)){
+                            $("").remove();
+                        }
+                    }
+                })
+            }
+            return false;
+        }
+
+    </script>
+</head>
+<body>
+<table class="table">
+    <tr>
+        <td>LHDA</td>
+        <td>LHDB</td>
+        <td>LHDC</td>
+        <td>OP</td>
+    </tr>
+    <tbody id="lhda"></tbody>
+</table>
+<script type="text/javascript">
+    showLhd();
+</script>
+</body>
+</html>

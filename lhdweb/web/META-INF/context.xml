@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource name="jdbc/lhd"
+              auth="Container"
+              type="javax.sql.DataSource"
+              driverClassName="oracle.jdbc.driver.OracleDriver"
+              url="jdbc:oracle:thin:@192.168.137.3:1521:xe"
+              username="hr"
+              password="123456"
+              maxActive="5"
+              maxldle="2"
+              maxWait="5000"
+    />
+</Context>
